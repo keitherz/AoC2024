@@ -71,12 +71,12 @@ def main():
 
     input_lines = load_file_lines(solution_dir, input_filename)
     solution = load_solution(solution_dir)
-    output = solution.solve(input_lines)
+    output = ",".join(solution.solve(input_lines))
     print(f"Solution output: {output}")
 
     if args.test:
         test_output_lines = load_file_lines(solution_dir, TEST_OUTPUT_FILENAME)
-        test_output = "".join(test_output_lines)
+        test_output = ",".join(test_output_lines)
         print(f"Expected test output: {test_output}")
         print(f"Test run result: {'PASSED' if output == test_output else 'FAILED'}")
 
