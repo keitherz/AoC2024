@@ -14,9 +14,9 @@ TEST_OUTPUT_FILENAME = "test_output.txt"
 PUZZLE_INPUT_FILENAME = "puzzle_input.txt"
 
 
-def load_file_lines(dir: str, filename: str) -> List[str]:
+def load_file_lines(solution_dir: str, filename: str) -> List[str]:
     """Input file loader"""
-    file_path = os.path.relpath(f"{dir}/{filename}")
+    file_path = os.path.relpath(f"{solution_dir}/{filename}")
     try:
         with open(file_path, "r", encoding="utf-8") as fp:
             lines = fp.readlines()
@@ -26,9 +26,9 @@ def load_file_lines(dir: str, filename: str) -> List[str]:
         sys.exit(1)
 
 
-def load_solution(dir: str):
+def load_solution(solution_dir: str):
     """Solution module loader"""
-    file_path = os.path.relpath(f"{dir}/solution.py")
+    file_path = os.path.relpath(f"{solution_dir}/solution.py")
     try:
         spec = importlib.util.spec_from_file_location("solution", file_path)
         module = importlib.util.module_from_spec(spec)
