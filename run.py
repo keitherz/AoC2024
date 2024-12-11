@@ -66,7 +66,7 @@ def main():
 
     solution = load_solution(solution_dir)
     test_input_lines = load_file_lines(solution_dir, TEST_INPUT_FILENAME)
-    test_input2_lines = load_file_lines(solution_dir, TEST_INPUT2_FILENAME)
+    test_input2_lines = load_file_lines(solution_dir, TEST_INPUT2_FILENAME, True)
     test_output_lines = load_file_lines(solution_dir, TEST_OUTPUT_FILENAME)
     test_solution_output = solution.solve(test_input_lines, test_input2_lines)
     test_output = ",".join(test_output_lines or [])
