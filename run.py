@@ -47,16 +47,9 @@ def main():
         "solution_dir",
         help="directory of the solution to run, e.g.: Day1",
     )
-    parser.add_argument(
-        "-t",
-        "--test",
-        help="run using the test input and validate output",
-        action="store_true",
-    )
 
     args = parser.parse_args()
     solution_dir = args.solution_dir
-    input_filename = PUZZLE_INPUT_FILENAME
 
     if not os.path.exists(solution_dir):
         print(f"Error: solution_dir does not exist: {solution_dir}")
@@ -66,19 +59,20 @@ def main():
         print(f"Error: solution_dir is not a directory: {solution_dir}")
         sys.exit(1)
 
-    if args.test:
-        input_filename = TEST_INPUT_FILENAME
-
-    input_lines = load_file_lines(solution_dir, input_filename)
     solution = load_solution(solution_dir)
-    output = ",".join(solution.solve(input_lines))
-    print(f"Solution output: {output}")
+    test_input_lines = load_file_lines(solution_dir, TEST_INPUT_FILENAME)
+    test_output_lines = load_file_lines(solution_dir, TEST_OUTPUT_FILENAME)
+    test_solution_output = solution.solve(test_input_lines)
+    test_output = ",".join(test_output_lines)
+    is_passed = test_solution_output == test_output
+    print(f"Solution test output: {test_solution_output}")
+    print(f"Expected test output: {test_output}")
+    print(f"Test run result: {'PASSED' if is_passed else 'FAILED'}")
 
-    if args.test:
-        test_output_lines = load_file_lines(solution_dir, TEST_OUTPUT_FILENAME)
-        test_output = ",".join(test_output_lines)
-        print(f"Expected test output: {test_output}")
-        print(f"Test run result: {'PASSED' if output == test_output else 'FAILED'}")
+    if is_passed:
+        puzzle_input_lines = load_file_lines(solution_dir, PUZZLE_INPUT_FILENAME)
+        puzzle_solution_output = solution.solve(puzzle_input_lines)
+        print(f"Solution puzzle output: {puzzle_solution_output}")
 
 
 if __name__ == "__main__":

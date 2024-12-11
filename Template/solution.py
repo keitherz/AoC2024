@@ -23,6 +23,7 @@ def solve_part2(input_lines: List[str]) -> str:
     return str(result)
 
 
-def solve(input_lines: List[str]) -> List[str]:
+def solve(input_lines: List[str]) -> str:
     """Return solutions for part 1 and part 2"""
-    return [solve_part1(input_lines), solve_part2(input_lines)]
+    results = filter(len, [solve_part1(input_lines), solve_part2(input_lines)])
+    return ",".join(results)
