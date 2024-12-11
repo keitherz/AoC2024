@@ -10,11 +10,14 @@ from typing import List
 
 
 TEST_INPUT_FILENAME = "test_input.txt"
+TEST_INPUT2_FILENAME = "test_input2.txt"
 TEST_OUTPUT_FILENAME = "test_output.txt"
 PUZZLE_INPUT_FILENAME = "puzzle_input.txt"
 
 
-def load_file_lines(solution_dir: str, filename: str) -> List[str]:
+def load_file_lines(
+    solution_dir: str, filename: str, skip_error: bool = False
+) -> List[str] | None:
     """Input file loader"""
     file_path = os.path.relpath(f"{solution_dir}/{filename}")
     try:
@@ -22,6 +25,8 @@ def load_file_lines(solution_dir: str, filename: str) -> List[str]:
             lines = fp.readlines()
             return lines
     except Exception as ex:
+        if skip_error:
+            return None
         print(f"Error: failed to load input file: {ex}")
         sys.exit(1)
 
@@ -61,9 +66,10 @@ def main():
 
     solution = load_solution(solution_dir)
     test_input_lines = load_file_lines(solution_dir, TEST_INPUT_FILENAME)
+    test_input2_lines = load_file_lines(solution_dir, TEST_INPUT2_FILENAME)
     test_output_lines = load_file_lines(solution_dir, TEST_OUTPUT_FILENAME)
-    test_solution_output = solution.solve(test_input_lines)
-    test_output = ",".join(test_output_lines)
+    test_solution_output = solution.solve(test_input_lines, test_input2_lines)
+    test_output = ",".join(test_output_lines or [])
     is_passed = test_solution_output == test_output
     print(f"Solution test output: {test_solution_output}")
     print(f"Expected test output: {test_output}")
